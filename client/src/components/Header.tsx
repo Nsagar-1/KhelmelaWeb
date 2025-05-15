@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Trophy } from "lucide-react";
@@ -6,6 +6,7 @@ import { Trophy } from "lucide-react";
 const Header = () => {
   const [location] = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -15,8 +16,18 @@ const Header = () => {
     setIsMobileMenuOpen(false);
   };
 
+  const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const targetId = href.replace('/#', '');
+    const element = document.getElementById(targetId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      closeMobileMenu();
+    }
+  };
+
   const navLinks = [
-    { href: "/", label: "Home" },
+    { href: "/#home", label: "Home" },
     { href: "/#features", label: "Features" },
     { href: "/#download", label: "Download" },
     { href: "/#about", label: "About" },
@@ -24,9 +35,30 @@ const Header = () => {
   ];
 
   const isActive = (path: string) => {
-    if (path === "/") return location === "/";
-    return location.startsWith(path);
+    const section = path.replace('/#', '');
+    return activeSection === section;
   };
+
+  useEffect(() => {
+    const sectionIds = navLinks.map(link => link.href.replace('/#', ''));
+    const handleScroll = () => {
+      let current = sectionIds[0];
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 80 && rect.bottom > 80) {
+            current = id;
+            break;
+          }
+        }
+      }
+      setActiveSection(current);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <header className="glass-effect sticky top-0 z-50 border-b border-gray-800">
@@ -45,17 +77,18 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
-              <Link key={link.href} href={link.href}>
-                <a
-                  className={`font-rajdhani text-lg font-medium transition-colors ${
-                    isActive(link.href)
-                      ? "text-secondary"
-                      : "text-light hover:text-secondary"
-                  }`}
-                >
-                  {link.label}
-                </a>
-              </Link>
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleNavigation(e, link.href)}
+                className={`font-rajdhani text-lg font-medium transition-colors cursor-pointer ${
+                  isActive(link.href)
+                    ? "text-secondary"
+                    : "text-light hover:text-secondary"
+                }`}
+              >
+                {link.label}
+              </a>
             ))}
           </nav>
 
@@ -65,9 +98,13 @@ const Header = () => {
               asChild
               className="bg-primary hover:bg-primary/90 text-white font-orbitron py-2 px-6 rounded-md transition-all hover:shadow-[0_0_10px_rgba(110,43,241,0.5),_0_0_20px_rgba(110,43,241,0.3)] transform hover:-translate-y-0.5 font-bold"
             >
-              <Link href="/#download">
-                <a>Get The App</a>
-              </Link>
+              <a
+                href="https://play.google.com/store/apps/details?id=com.khelmela.app"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Get The App
+              </a>
             </Button>
           </div>
 
@@ -120,27 +157,27 @@ const Header = () => {
       >
         <nav className="flex flex-col space-y-4 py-4 px-4 bg-dark/80 backdrop-blur-md border-t border-gray-800">
           {navLinks.map((link) => (
-            <Link key={link.href} href={link.href}>
-              <a
-                className={`font-rajdhani py-2 px-4 text-lg transition-colors ${
-                  isActive(link.href)
-                    ? "text-secondary"
-                    : "text-light hover:text-secondary"
-                }`}
-                onClick={closeMobileMenu}
-              >
-                {link.label}
-              </a>
-            </Link>
-          ))}
-          <Link href="/#download">
             <a
-              className="bg-primary hover:bg-primary/90 text-white text-center font-orbitron py-3 px-6 rounded-md transition-all hover:shadow-[0_0_10px_rgba(110,43,241,0.5),_0_0_20px_rgba(110,43,241,0.3)] font-bold mt-2"
-              onClick={closeMobileMenu}
+              key={link.href}
+              href={link.href}
+              onClick={(e) => handleNavigation(e, link.href)}
+              className={`font-rajdhani py-2 px-4 text-lg transition-colors cursor-pointer ${
+                isActive(link.href)
+                  ? "text-secondary"
+                  : "text-light hover:text-secondary"
+              }`}
             >
-              Get The App
+              {link.label}
             </a>
-          </Link>
+          ))}
+          <a
+            href="https://play.google.com/store/apps/details?id=com.khelmela.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-primary hover:bg-primary/90 text-white text-center font-orbitron py-3 px-6 rounded-md transition-all hover:shadow-[0_0_10px_rgba(110,43,241,0.5),_0_0_20px_rgba(110,43,241,0.3)] font-bold mt-2"
+          >
+            Get The App
+          </a>
         </nav>
       </div>
     </header>

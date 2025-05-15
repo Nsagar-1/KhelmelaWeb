@@ -20,6 +20,7 @@ import {
   FaPaperPlane
 } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 const Home = () => {
   const { data: tournaments = [] } = useQuery({
@@ -63,6 +64,23 @@ const Home = () => {
     }
   ];
 
+  // Contact form state
+  const [contactName, setContactName] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
+  const [contactSubject, setContactSubject] = useState("");
+  const [contactMessage, setContactMessage] = useState("");
+  const [messageSent, setMessageSent] = useState(false);
+
+  const handleContactSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setMessageSent(true);
+    setContactName("");
+    setContactEmail("");
+    setContactSubject("");
+    setContactMessage("");
+    setTimeout(() => setMessageSent(false), 2500);
+  };
+
   return (
     <>
       {/* Hero Section */}
@@ -80,21 +98,23 @@ const Home = () => {
                 Join and compete in gaming tournaments on our platform. Take your gaming experience to new heights.
               </p>
               <div className="flex justify-center md:justify-start">
-                <Button 
-                  onClick={() => document.getElementById('download')?.scrollIntoView({ behavior: 'smooth' })}
+                <Button
+                  asChild
                   className="bg-primary hover:bg-primary/90 text-white font-orbitron py-3 px-8 rounded-md transition-all hover:shadow-[0_0_10px_rgba(110,43,241,0.5),_0_0_20px_rgba(110,43,241,0.3)] transform hover:-translate-y-0.5 text-lg font-bold inline-flex items-center justify-center h-auto"
                 >
-                  <FaDownload className="mr-2" /> Download Now
+                  <a
+                    href="https://play.google.com/store/apps/details?id=com.khelmela.app"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaDownload className="mr-2" /> Download Now
+                  </a>
                 </Button>
               </div>
             </div>
             <div className="md:w-1/2 relative">
               <div className="relative bg-gradient-to-r from-primary/20 to-secondary/20 rounded-2xl overflow-hidden border border-gray-700 shadow-xl">
-                <img 
-                  src="https://images.unsplash.com/photo-1577741314755-048d8525792e?auto=format&fit=crop&q=80" 
-                  alt="Tournament Banner" 
-                  className="w-full h-auto rounded-2xl mix-blend-luminosity opacity-80" 
-                />
+                
                 <div className="absolute inset-0 bg-gradient-to-t from-dark to-transparent"></div>
                 
               </div>
@@ -119,7 +139,7 @@ const Home = () => {
             <div className="game-card rounded-xl overflow-hidden border border-gray-800 hover:shadow-[0_0_10px_rgba(110,43,241,0.5),_0_0_20px_rgba(110,43,241,0.3)] transition-all hover:-translate-y-1 group relative">
               <div className="relative h-[400px] overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?auto=format&fit=crop&q=80&w=1200" 
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9XbiZg4as_cMEvbNQM20V92o-kfIARBlBEg&s" 
                   alt="Free Fire" 
                   className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" 
                 />
@@ -140,7 +160,7 @@ const Home = () => {
             <div className="game-card rounded-xl overflow-hidden border border-gray-800 hover:shadow-[0_0_10px_rgba(110,43,241,0.5),_0_0_20px_rgba(110,43,241,0.3)] transition-all hover:-translate-y-1 group relative">
               <div className="relative h-[400px] overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1590422749897-47049da3a00d?auto=format&fit=crop&q=80&w=1200" 
+                  src="https://activeplayer.io/wp-content/uploads/2022/07/PubG-Player-Statistics-Live-Pubg-Player-Count-1.jpg" 
                   alt="PUBG" 
                   className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" 
                 />
@@ -161,7 +181,7 @@ const Home = () => {
             <div className="game-card rounded-xl overflow-hidden border border-gray-800 hover:shadow-[0_0_10px_rgba(110,43,241,0.5),_0_0_20px_rgba(110,43,241,0.3)] transition-all hover:-translate-y-1 group relative md:col-span-2">
               <div className="relative h-[300px] overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&q=80&w=1800" 
+                  src="https://cdn.prod.website-files.com/65956e2711516206d2d1258f/6634c7715af10f24b00dc7b1_CODM%202663x1384-p-1600.webp" 
                   alt="Call of Duty" 
                   className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 filter grayscale" 
                 />
@@ -206,7 +226,7 @@ const Home = () => {
 
       {/* App Download Section */}
       <section id="download" className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&q=80')] bg-cover bg-center opacity-10 z-0"></div>
+        <div className="absolute inset-0 bg-[url('https://www.riotgames.com/darkroom/2880/a4e88f6b04bf83f1c417e87292b85606:e15ef8517ae4c1ea3eb4d8da6da75c25/riot-games-the-team-behind-worlds-2022-esports-broadcast-league-of-legends.png')] bg-cover bg-center opacity-10 z-0"></div>
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-12">
@@ -215,7 +235,7 @@ const Home = () => {
                 Take Your Gaming <span className="text-primary">Experience</span> Everywhere
               </h2>
               <p className="text-gray-300 text-lg mb-8 max-w-xl">
-                Download our app and get instant access to tournaments, team management, and real-time notifications, all in the palm of your hand.
+              Download Khelmela – Play games, join tournaments, manage your squad, and win real money, all in one app.Download now, game hard, earn real rewards
               </p>
               
               <div className="flex flex-col sm:flex-row gap-6 justify-center md:justify-start">
@@ -243,28 +263,7 @@ const Home = () => {
             
             <div className="md:w-1/2 relative">
               <div className="relative max-w-sm mx-auto md:mx-0">
-                {/* Phone Mockup */}
-                <div className="bg-dark rounded-[3rem] p-3 border-4 border-gray-800 shadow-2xl rotate-3 relative z-20">
-                  <div className="rounded-[2.5rem] overflow-hidden border border-gray-700">
-                    <img 
-                      src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&q=80" 
-                      alt="KhelMela App" 
-                      className="w-full" 
-                    />
-                  </div>
-                  
-                </div>
-                
-                {/* Second Phone in Background */}
-                <div className="absolute top-20 -left-8 md:-left-20 bg-dark rounded-[3rem] p-3 border-4 border-gray-800 shadow-2xl -rotate-6 hidden md:block w-4/5 z-10">
-                  <div className="rounded-[2.5rem] overflow-hidden border border-gray-700">
-                    <img 
-                      src="https://images.unsplash.com/photo-1590422749897-47049da3a00d?auto=format&fit=crop&q=80" 
-                      alt="PUBG Tournament" 
-                      className="w-full" 
-                    />
-                  </div>
-                </div>
+               
                 
                 {/* Decorative Elements */}
                 <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-secondary/20 rounded-full blur-xl z-0"></div>
@@ -282,13 +281,12 @@ const Home = () => {
             <div>
               <h2 className="text-3xl md:text-4xl font-bold font-rajdhani mb-6">About <span className="text-primary">KhelMela</span></h2>
               <p className="text-gray-300 mb-6">
-                KhelMela was founded by a team of passionate battle royale gamers and esports enthusiasts who saw the need for a comprehensive tournament platform that could serve players of all levels, from casual competitors to professional teams.
-              </p>
-              <p className="text-gray-300 mb-6">
-                Our mission is to make competitive gaming accessible to everyone while providing professional-grade tools that help tournament organizers create exceptional experiences for participants and spectators alike.
+              KhelMela was started by a group of battle royale fans and esports lovers who wanted to build a platform for all kinds of players — from beginners to pros.
+
+Our goal is to make competitive gaming easy and fun for everyone, while giving organizers the tools they need to run smooth and exciting tournaments.
               </p>
               <p className="text-gray-300 mb-8">
-                Since our launch in 2021, we've hosted over 10,000 tournaments across 20+ game titles, with players from more than 50 countries. We're committed to growing the esports ecosystem and supporting communities of all sizes.
+                Since our launch in 2025. We're committed to growing the esports ecosystem and supporting communities in Nepal.
               </p>
               
 
@@ -302,14 +300,14 @@ const Home = () => {
               <div className="space-y-4">
                 <div className="rounded-xl overflow-hidden h-48 md:h-64">
                   <img 
-                    src="https://images.unsplash.com/photo-1511882150382-421056c89033?auto=format&fit=crop&q=80" 
+                    src="https://cdn.prod.website-files.com/65956e2711516206d2d1258f/6634c7715af10f24b00dc7b1_CODM%202663x1384-p-1600.webp" 
                     alt="Esports Tournament" 
                     className="w-full h-full object-cover" 
                   />
                 </div>
                 <div className="rounded-xl overflow-hidden h-32 md:h-48">
                   <img 
-                    src="https://images.unsplash.com/photo-1542751371-ed3d4a44ae7f?auto=format&fit=crop&q=80" 
+                    src="https://activeplayer.io/wp-content/uploads/2022/07/PubG-Player-Statistics-Live-Pubg-Player-Count-1.jpg" 
                     alt="Gaming Setup" 
                     className="w-full h-full object-cover" 
                   />
@@ -318,18 +316,12 @@ const Home = () => {
               <div className="space-y-4 pt-8">
                 <div className="rounded-xl overflow-hidden h-32 md:h-48">
                   <img 
-                    src="https://images.unsplash.com/photo-1576240134190-1d8cf23f044d?auto=format&fit=crop&q=80" 
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9XbiZg4as_cMEvbNQM20V92o-kfIARBlBEg&s" 
                     alt="Trophy Ceremony" 
                     className="w-full h-full object-cover" 
                   />
                 </div>
-                <div className="rounded-xl overflow-hidden h-48 md:h-64">
-                  <img 
-                    src="https://images.unsplash.com/photo-1546443046-ed1ce6ffd1ab?auto=format&fit=crop&q=80" 
-                    alt="Gaming Controller" 
-                    className="w-full h-full object-cover" 
-                  />
-                </div>
+               
               </div>
             </div>
           </div>
@@ -355,7 +347,7 @@ const Home = () => {
                 </div>
                 <h3 className="text-lg font-bold font-rajdhani text-white mb-2">Email Us</h3>
                 <p className="text-gray-400 mb-2">For general inquiries and support</p>
-                <a href="mailto:support@khelmela.com" className="text-secondary hover:text-secondary/80 font-semibold">support@khelmela.com</a>
+                <a href="mailto:bussinesskhelmela@gmail.com" className="text-secondary hover:text-secondary/80 font-semibold">bussinesskhelmela@gmail.com</a>
               </div>
               
               <div className="bg-dark/60 p-6 rounded-xl border border-gray-800 text-center hover:border-secondary/50 hover:shadow-[0_0_10px_rgba(0,209,255,0.5),_0_0_20px_rgba(0,209,255,0.3)] transition-all">
@@ -379,16 +371,18 @@ const Home = () => {
                   </svg>
                 </div>
                 <h3 className="text-lg font-bold font-rajdhani text-white mb-2">Our Location</h3>
-                <p className="text-gray-400 mb-2">Visit our headquarters</p>
-                <a href="#" className="text-secondary hover:text-secondary/80 font-semibold">San Francisco, CA</a>
+                <p className="text-gray-400 mb-2">We are based in FarWest,Nepal</p>
+                <a href="#" className="text-secondary hover:text-secondary/80 font-semibold">FarWest,Nepal</a>
               </div>
             </div>
             
             {/* Contact Form */}
             <div className="bg-dark/60 rounded-xl border border-gray-800 p-8">
               <h3 className="text-2xl font-bold font-rajdhani text-white mb-6">Send us a message</h3>
-              
-              <form onSubmit={(e) => e.preventDefault()}>
+              {messageSent && (
+                <div className="mb-4 p-3 rounded bg-green-600 text-white text-center font-semibold transition-all">Message sent!</div>
+              )}
+              <form onSubmit={handleContactSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div>
                     <label htmlFor="name" className="block text-gray-400 mb-2 font-medium">Your Name</label>
@@ -397,6 +391,8 @@ const Home = () => {
                       id="name" 
                       className="w-full bg-dark/60 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-secondary transition-colors" 
                       placeholder="John Doe" 
+                      value={contactName}
+                      onChange={e => setContactName(e.target.value)}
                     />
                   </div>
                   <div>
@@ -406,10 +402,11 @@ const Home = () => {
                       id="email" 
                       className="w-full bg-dark/60 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-secondary transition-colors" 
                       placeholder="john@example.com" 
+                      value={contactEmail}
+                      onChange={e => setContactEmail(e.target.value)}
                     />
                   </div>
                 </div>
-                
                 <div className="mb-6">
                   <label htmlFor="subject" className="block text-gray-400 mb-2 font-medium">Subject</label>
                   <input 
@@ -417,9 +414,10 @@ const Home = () => {
                     id="subject" 
                     className="w-full bg-dark/60 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-secondary transition-colors" 
                     placeholder="How can we help you?" 
+                    value={contactSubject}
+                    onChange={e => setContactSubject(e.target.value)}
                   />
                 </div>
-                
                 <div className="mb-6">
                   <label htmlFor="message" className="block text-gray-400 mb-2 font-medium">Your Message</label>
                   <textarea 
@@ -427,10 +425,11 @@ const Home = () => {
                     rows={5} 
                     className="w-full bg-dark/60 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-secondary transition-colors" 
                     placeholder="Tell us how we can assist you..."
+                    value={contactMessage}
+                    onChange={e => setContactMessage(e.target.value)}
                   ></textarea>
                 </div>
-                
-                <Button className="bg-primary hover:bg-primary/90 text-white font-orbitron py-3 px-8 rounded-md transition-all hover:shadow-[0_0_10px_rgba(110,43,241,0.5),_0_0_20px_rgba(110,43,241,0.3)] transform hover:-translate-y-0.5 font-bold inline-flex items-center justify-center h-auto">
+                <Button type="submit" className="bg-primary hover:bg-primary/90 text-white font-orbitron py-3 px-8 rounded-md transition-all hover:shadow-[0_0_10px_rgba(110,43,241,0.5),_0_0_20px_rgba(110,43,241,0.3)] transform hover:-translate-y-0.5 font-bold inline-flex items-center justify-center h-auto">
                   Send Message <FaPaperPlane className="ml-2" />
                 </Button>
               </form>
@@ -450,12 +449,18 @@ const Home = () => {
           <p className="text-gray-300 max-w-2xl mx-auto mb-10 text-lg">Join thousands of battle royale gamers on KhelMela, the fastest growing platform for Free Fire and PUBG tournaments.</p>
           
           <div className="flex justify-center">
-            <Button asChild className="bg-primary hover:bg-primary/90 text-white font-orbitron py-3 px-8 rounded-md transition-all hover:shadow-[0_0_10px_rgba(110,43,241,0.5),_0_0_20px_rgba(110,43,241,0.3)] transform hover:-translate-y-0.5 text-lg font-bold inline-flex items-center justify-center h-auto">
-              <Link href="#download">
-                <a className="inline-flex items-center">
-                  <FaDownload className="mr-2" /> Download App
-                </a>
-              </Link>
+            <Button
+              asChild
+              className="bg-primary hover:bg-primary/90 text-white font-orbitron py-3 px-8 rounded-md transition-all hover:shadow-[0_0_10px_rgba(110,43,241,0.5),_0_0_20px_rgba(110,43,241,0.3)] transform hover:-translate-y-0.5 text-lg font-bold inline-flex items-center justify-center h-auto"
+            >
+              <a
+                href="https://play.google.com/store/apps/details?id=com.khelmela.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center"
+              >
+                <FaDownload className="mr-2" /> Download App
+              </a>
             </Button>
           </div>
         </div>

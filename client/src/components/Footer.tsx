@@ -22,8 +22,8 @@ const Footer = () => {
                   <Trophy className="text-light" />
                 </div>
                 <h1 className="text-2xl font-bold font-orbitron tracking-wider">
-                  <span className="text-primary">Tourney</span>
-                  <span className="text-secondary">Hub</span>
+                  <span className="text-primary">Khel</span>
+                  <span className="text-secondary">Mela</span>
                 </h1>
               </a>
             </Link>
@@ -136,7 +136,7 @@ const Footer = () => {
         
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-500 text-sm mb-4 md:mb-0">
-            © {currentYear} TourneyHub. All rights reserved.
+           2025 KhelMela. All rights reserved.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <div className="h-6 opacity-50 hover:opacity-100 transition-opacity">
